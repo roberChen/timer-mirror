@@ -1,0 +1,43 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Ended	datamng.h	/^	Ended,$/;"	e	enum:__anon1
+None	datamng.h	/^	None$/;"	e	enum:__anon1
+Plan	datamng.h	/^	Plan,$/;"	e	enum:__anon1
+Started	datamng.h	/^	Started,$/;"	e	enum:__anon1
+Suspend	datamng.h	/^	Suspend,$/;"	e	enum:__anon1
+add	datamng.c	/^tele *add(tlist *list,char *name, mode status){$/;"	f
+datach	datamng.c	/^int datach(tele *obj,char *fmt,...){$/;"	f
+delele	datamng.c	/^int delele(tlist *list, tele *ele){$/;"	f
+endt	datamng.h	/^	time_t endt;$/;"	m	struct:strTele
+findbyid	datamng.c	/^tele *findbyid(tlist *list, int id){$/;"	f
+findbyname	datamng.c	/^tele *findbyname(tlist *list,char *name){$/;"	f
+floads	datamng.c	/^tlist *floads(char *fname){$/;"	f
+fsave	datamng.c	/^int fsave(tlist *saveobj, char *fname){$/;"	f
+head	datamng.h	/^	tele *head;$/;"	m	struct:strTlist
+id	datamng.h	/^	int id;$/;"	m	struct:__anon2
+id	datamng.h	/^	int id;$/;"	m	struct:strTele
+iterlist	datamng.h	/^} iterlist;$/;"	t	typeref:struct:__anon2
+iterobj	datamng.h	/^	tlist *iterobj;$/;"	m	struct:__anon2
+lenth	datamng.h	/^	int lenth;$/;"	m	struct:__anon2
+lenth	datamng.h	/^	int lenth;$/;"	m	struct:strTlist
+list	datamng.h	/^	tlist *list;$/;"	m	struct:strTele
+listinit	datamng.c	/^tlist *listinit(){$/;"	f
+liter	datamng.c	/^tele *liter(iterlist *iterobj){$/;"	f
+main	datamng_test.c	/^int main(int argc, char *argv[]){$/;"	f
+mode	datamng.h	/^} mode;$/;"	t	typeref:enum:__anon1
+name	datamng.h	/^	char *name;$/;"	m	struct:strTele
+newiter	datamng.c	/^iterlist *newiter(tlist *obj){$/;"	f
+next	datamng.h	/^	tele *next;$/;"	m	struct:strTele
+prev	datamng.h	/^	tele *prev;$/;"	m	struct:strTele
+start	datamng.h	/^	time_t start;$/;"	m	struct:strTele
+status	datamng.h	/^	mode status;$/;"	m	struct:strTele
+strTele	datamng.h	/^struct strTele{$/;"	s
+strTlist	datamng.h	/^struct strTlist{$/;"	s
+tail	datamng.h	/^	tele *tail;$/;"	m	struct:strTlist
+tele	datamng.h	/^typedef struct strTele tele;$/;"	t	typeref:struct:strTele
+telep	datamng.h	/^	tele *telep;$/;"	m	struct:__anon2
+tlist	datamng.h	/^typedef struct strTlist tlist;$/;"	t	typeref:struct:strTlist
