@@ -124,49 +124,47 @@ int datach(tele *obj,char *fmt,...){
 iterlist *newiter(tlist *obj){
 	iterlist *new = calloc(1,sizeof(iterlist));
 	new->iterobj = obj;
-	new->id = 0;
+	new->id = 1;
 	new->lenth = obj->lenth;
 	new->telep = obj->head;
-
+	//printf("New iterobj with lenth %d.\n",new->lenth);
 	return new;
 }
 
 tele *liter(iterlist *iterobj){
-	if(iterobj->id == iterobj->lenth){
+	if(iterobj->id > iterobj->lenth || iterobj->telep==NULL){
 		free(iterobj);
+	//	printf("End of iter object.\n");
 		return NULL;
 	}
+	tele *yield = iterobj->telep;
 	iterobj->telep = iterobj->telep->next;
 	iterobj->id++;
-	return iterobj->telep;
+	//printf("ele %p\tid %d\tname %s\n",yield,yield->id,yield->name);
+	return yield;
 }
 
 tlist *floads(char *fname){
 	FILE *fp;
 	if((fp=fopen(fname,"r"))==NULL){
-		perror("Cannot load data %s:");
-		fclose(fp);
-		exit(1);
+		perror("Cannot load data");
+		return NULL;
 	}
 	//loads
 	tlist *new = listinit();
-
 	tele *elep;
 	char s[500], *cp;
-	while(fscanf(fp,"%s",s)!=EOF){
+	while(!feof(fp)){
 		elep = calloc(1,sizeof(tele));
 		elep->next = NULL;
 		elep->list = new;
 		for(cp=s;*++cp!=' ';);
 		elep->name = malloc(cp-s+1);
-		elep->name[cp-s] = '\0';
-		strncpy(elep->name,s,cp-s);
 		int imode;
-		sscanf((const char *)cp,"%d %ld %ld %d",
-				&elep->id, 
-				&elep->start,
-				&elep->endt,
-				&imode);
+		fscanf(fp,"%s %d %ld %ld %d\n",elep->name,&elep->id,
+						&elep->start,&elep->endt,&imode);
+		//printf("gets %s %d %ld %ld %d\n",elep->name,elep->id,
+		//		elep->start,elep->endt,imode);
 		switch(imode){
 			case 0:
 				elep->status = Started;break;
@@ -191,6 +189,7 @@ tlist *floads(char *fname){
 	}
 
 	fclose(fp);
+	//printf("loads %d ele.\n",new->lenth);
 	return new;
 }
 
@@ -211,7 +210,13 @@ int fsave(tlist *saveobj, char *fname){
 			case None:
 				imode = 4;break;
 		}
-		fprintf(fp,"%s %d %ld %ld %d",
+		//printf("Saving %s %d %ld %ld %d at %s\n",
+		//		ele->name,
+		//		ele->id,
+		//		ele->start,
+		//		ele->endt,
+		//		imode, fname);
+		fprintf(fp,"%s %d %ld %ld %d\n",
 				ele->name,
 				ele->id,
 				ele->start,

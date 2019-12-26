@@ -1,0 +1,2 @@
+test.o: datamng.c datamng.h datamng_test.c
+	gcc -g -o test.o datamng.c datamng.h datamng_test.c
