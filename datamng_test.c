@@ -26,7 +26,7 @@ int main(int argc, char *argv[]){
 	else
 		printf("findbyname not passed!\n");
 	datach(ep,"%s");
-	sleep(10);
+	sleep(1);
 	datach(ep,"%e");
 	fsave(list,"save1.list");
 	printf("End test.\n");

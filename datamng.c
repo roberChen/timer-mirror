@@ -59,19 +59,19 @@ int delele(tlist *list, tele *ele){
 
 tele *findbyid(tlist *list, int id){
 	tele *obj;
-	for(obj=list->head;obj->id!=id;obj=obj->next){
-		if(obj==NULL)
-			return NULL;
+	for(iterlist *iter=newiter(list);obj=liter(iter);){
+		if(obj->id==id)
+			return obj;
 	}
-	return obj;
+	return NULL;
 }
 
 tele *findbyname(tlist *list,char *name){
 	tele *obj;
-	for(obj=list->head;strcmp(obj->name,name)!=0;obj=obj->next)
-		if(obj==NULL)
-			return NULL;
-	return obj;
+	for(iterlist *iter=newiter(list);obj=liter(iter);)
+		if(strcmp(obj->name,name)==0)
+			return obj;
+	return NULL;
 }
 
 int datach(tele *obj,char *fmt,...){
