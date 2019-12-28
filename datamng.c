@@ -67,8 +67,32 @@ int delele(tlist *list, tele *ele){
 }
 
 int ptele(tele *ele,char *fmt){
+	//print the ele with format:
+	//the format note:
+	//	%n :name
+	//	%i :id
+	//	%s2y %s4y: year of start
+	//	%snM %scM : month of start, n means number,
+	//					c means characters.
+	//	%sD : date of start
+	//	%sd :day of start(Mon, Tue,etc)
+	//	%sh %s24h: hour of start.
+	//	%sm :minutes of start
+	//	%e- :sames to s. shows the time of end.
 	char *cp = fmt;
-	
+	while(*cp){
+		if(*cp!='%'){
+			putchar(*cp++);
+			continue;
+		}
+		cp++;
+		if(*cp=='n')
+			printf("%s",ele->name);
+
+				
+
+	}
+
 }
 
 tele *findbyid(tlist *list, int id){
