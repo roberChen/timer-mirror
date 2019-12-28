@@ -49,12 +49,26 @@ int delele(tlist *list, tele *ele){
 		fprintf(stderr,"tele %p not in tlist %p\n",list, ele);
 		return 0;
 	}
-	ele->prev->next = ele->next;
-	ele->next->prev = ele->prev;
+	if(ele==list->head){
+		list->head = ele->next;
+		if(list->head!=NULL)
+			list->head->prev=NULL;
+	}else if(ele==list->tail){
+		list->tail = ele->next;
+		list->tail->next = NULL;
+	}else{
+		ele->prev->next = ele->next;
+		ele->next->prev = ele->prev;
+	}
 	free(ele->name);
 	free(ele);
 	list->lenth--;
 	return 1;
+}
+
+int ptele(tele *ele,char *fmt){
+	char *cp = fmt;
+	
 }
 
 tele *findbyid(tlist *list, int id){
