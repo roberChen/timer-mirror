@@ -15,7 +15,7 @@ int main(int argc, char *argv[]){
 	printf("Lenth of list %d\n",list->lenth);
 	char name[20];
 	printf("Add new activity:");
-	scanf("%s",name);
+	scanf("%[^\n]",name);
 	tele *ep = add(list,name,None);
 	if(findbyid(list,ep->id)==ep)
 		printf("findbyid passed!\n");

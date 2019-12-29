@@ -16,6 +16,7 @@ struct strTele{
 	int id;
 	tele *prev;
 	tele *next;
+	int spndnextid;
 	tlist *list;
 	time_t start;
 	time_t endt;

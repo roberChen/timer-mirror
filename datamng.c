@@ -286,17 +286,20 @@ tlist *floads(char *fname){
 	//loads
 	tlist *new = listinit();
 	tele *elep;
-	char s[500], *cp;
 	while(!feof(fp)){
 		elep = calloc(1,sizeof(tele));
 		elep->next = NULL;
 		elep->list = new;
-		for(cp=s;*++cp!=' ';);
-		elep->name = malloc(cp-s+1);
+		elep->name = malloc(101);
 		int imode;
-		fscanf(fp,"%s %d %ld %ld %d\n",elep->name,&elep->id,
-						&elep->start,&elep->endt,&imode);
-		//printf("gets %s %d %ld %ld %d\n",elep->name,elep->id,
+		fscanf(fp,"%[^;]%*c %d %d %ld %ld %d\n",
+				elep->name,
+				&elep->id,
+				&elep->spndnextid,
+				&elep->start,
+				&elep->endt,
+				&imode);
+		//printf("gets %s;; %d %ld %ld %d\n",elep->name,elep->id,
 		//		elep->start,elep->endt,imode);
 		elep->status = map[imode];
 		if(new->lenth==0){
@@ -338,9 +341,10 @@ int fsave(tlist *saveobj, char *fname){
 		//		ele->start,
 		//		ele->endt,
 		//		imode, fname);
-		fprintf(fp,"%s %d %ld %ld %d\n",
+		fprintf(fp,"%s; %d %d %ld %ld %d\n",
 				ele->name,
 				ele->id,
+				ele->spndnextid,
 				ele->start,
 				ele->endt,
 				imode);
