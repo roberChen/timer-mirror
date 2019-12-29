@@ -10,6 +10,14 @@
 
 extern int errno;
 
+mode map[5] = {
+	Started,
+	Ended,
+	Suspend,
+	Plan,
+	None
+};
+
 tlist *listinit(){
 	tlist *this = calloc(1,sizeof(tlist));
 	this->head = NULL;
@@ -203,18 +211,7 @@ tlist *floads(char *fname){
 						&elep->start,&elep->endt,&imode);
 		//printf("gets %s %d %ld %ld %d\n",elep->name,elep->id,
 		//		elep->start,elep->endt,imode);
-		switch(imode){
-			case 0:
-				elep->status = Started;break;
-			case 1:
-				elep->status = Ended;break;
-			case 2:
-				elep->status = Suspend;break;
-			case 3:
-				elep->status = Plan;break;
-			case 4:
-				elep->status = None;break;
-		}
+		elep->status = map[imode];
 		if(new->lenth==0){
 			new->head = new->tail = elep;
 			elep->prev = NULL;
