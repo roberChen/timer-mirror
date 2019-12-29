@@ -18,6 +18,25 @@ mode map[5] = {
 	None
 };
 
+char *monmap[12] = {
+	"Jan","Fab","Mar","Apr","May","Jun","Jul","Aug",
+		"Sep","Oct","Nov","Dec"
+};
+
+char *monmapzh[12] = {
+	"一月","二月","三月","四月","五月","六月","七月",
+		"八月","九月","十月","十一月","十二月"
+};
+
+char *wdaymap[7] = {
+	"Monday","Tuesday","Wednsday","Forthday","Friday",
+	"Statuaday","Sunday"
+};
+
+char *wdaymapzh[7] = {
+	"周一","周二","周三","周四","周五","周六","周日"
+};
+
 tlist *listinit(){
 	tlist *this = calloc(1,sizeof(tlist));
 	this->head = NULL;
@@ -80,27 +99,95 @@ int ptele(tele *ele,char *fmt){
 	//	%n :name
 	//	%i :id
 	//	%s2y %s4y: year of start
-	//	%snM %scM : month of start, n means number,
-	//					c means characters.
-	//	%sD : date of start
-	//	%sd :day of start(Mon, Tue,etc)
-	//	%sh %s24h: hour of start.
+	//	%snM %scM %szM: month of start, n means number,
+	//					c means characters, z means chinese.
+	//	%sd : date of start
+	//	%snD %scD %szD : week day of start(Mon, Tue,etc)
+	//	%s12h %s24h: hour of start.
+	//	%sH : AM or PM of start
 	//	%sm :minutes of start
+	//	%ss: seconds of start
 	//	%e- :sames to s. shows the time of end.
 	char *cp = fmt;
+	struct tm *thistm;
+	time_t *t;
 	while(*cp){
 		if(*cp!='%'){
 			putchar(*cp++);
 			continue;
 		}
 		cp++;
-		if(*cp=='n')
+		if(*cp=='n'){
 			printf("%s",ele->name);
-
-				
-
+			cp++;
+			continue;
+		}
+		if(*cp=='i'){
+			printf("%d",ele->id);
+			cp++;
+			continue;
+		}
+		if(*cp=='s' || *cp=='e'){
+			t = *cp=='s'?&ele->start:&ele->endt;
+			thistm = localtime(t);
+			cp++;
+			if(strncmp("2y",cp,2)==0){
+				printf("%d",thistm->tm_year-(thistm->tm_year/100)*100);
+				cp+=2;
+				continue;
+			}else if(strncmp("4y",cp,2)==0){
+				printf("%d",thistm->tm_year+1900);
+				cp+=2;
+				continue;
+			}else if(strncmp("nM",cp,2)==0){
+				printf("%d",thistm->tm_mon);
+				cp+=2;
+				continue;
+			}else if(strncmp("cM",cp,2)==0){
+				printf("%s",monmap[thistm->tm_mon-1]);
+				cp+=2;
+				continue;
+			}else if(strncmp("zM",cp,2)==0){
+				printf("%s",monmapzh[thistm->tm_mon-1]);
+				cp+=2;
+				continue;
+			}else if(strncmp("12h",cp,3)==0){
+				printf("%.2d",thistm->tm_hour>12?thistm->tm_hour-12:thistm->tm_hour);
+				cp+=3;
+				continue;
+			}else if(strncmp("24h",cp,3)==0){
+				printf("%.2d",thistm->tm_hour);
+				cp+=3;
+				continue;
+			}else if(*cp=='H'){
+				printf("%s",thistm->tm_hour>12?"PM":"AM");
+				cp++;
+				continue;
+			}else if(*cp=='d'){
+				printf("%d",thistm->tm_mday);
+				cp++;
+				continue;
+			}else if(strncmp("nD",cp,2)==0){
+				printf("%d",thistm->tm_wday);
+				cp+=2;
+			}else if(strncmp("cD",cp,2)==0){
+				printf("%s",wdaymap[thistm->tm_wday-1]);
+				cp+=2;
+				continue;
+			}else if(strncmp("zD",cp,2)==0){
+				printf("%s",wdaymapzh[thistm->tm_wday-1]);
+				cp+=2;
+				continue;
+			}else if(*cp=='m'){
+				printf("%.2d",thistm->tm_min);
+				cp++;
+			}else if(*cp=='s'){
+				printf("%.2d",thistm->tm_sec);
+				cp++;
+			}
+		}
 	}
-
+	return 0;
 }
 
 tele *findbyid(tlist *list, int id){

@@ -26,8 +26,10 @@ int main(int argc, char *argv[]){
 	else
 		printf("findbyname not passed!\n");
 	datach(ep,"%s");
+	ptele(ep,"Starts at %s24h:%sm:%ss %s2y or %s4y\n");
 	sleep(1);
 	datach(ep,"%e");
+	ptele(ep,"Ends at %e24h:%em:%es %e2y or %e4y\n");
 	fsave(list,"save1.list");
 	printf("End test.\n");
 	return 0;
