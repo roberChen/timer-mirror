@@ -29,7 +29,7 @@ char *monmapzh[12] = {
 };
 
 char *wdaymap[7] = {
-	"Monday","Tuesday","Wednsday","Forthday","Friday",
+	"Monday","Tuesday","Wednsday","Thursday","Friday",
 	"Statuaday","Sunday"
 };
 
