@@ -28,11 +28,17 @@ list	datamng.h	/^	tlist *list;$/;"	m	struct:strTele
 listinit	datamng.c	/^tlist *listinit(){$/;"	f
 liter	datamng.c	/^tele *liter(iterlist *iterobj){$/;"	f
 main	datamng_test.c	/^int main(int argc, char *argv[]){$/;"	f
+main	test.c	/^int main(int argc, char *argv[]){$/;"	f
+map	datamng.c	/^mode map[5] = {$/;"	v
 mode	datamng.h	/^} mode;$/;"	t	typeref:enum:__anon1
+monmap	datamng.c	/^char *monmap[12] = {$/;"	v
+monmapzh	datamng.c	/^char *monmapzh[12] = {$/;"	v
 name	datamng.h	/^	char *name;$/;"	m	struct:strTele
 newiter	datamng.c	/^iterlist *newiter(tlist *obj){$/;"	f
 next	datamng.h	/^	tele *next;$/;"	m	struct:strTele
 prev	datamng.h	/^	tele *prev;$/;"	m	struct:strTele
+ptele	datamng.c	/^int ptele(tele *ele,char *fmt){$/;"	f
+spndnextid	datamng.h	/^	int spndnextid;$/;"	m	struct:strTele
 start	datamng.h	/^	time_t start;$/;"	m	struct:strTele
 status	datamng.h	/^	mode status;$/;"	m	struct:strTele
 strTele	datamng.h	/^struct strTele{$/;"	s
@@ -41,3 +47,5 @@ tail	datamng.h	/^	tele *tail;$/;"	m	struct:strTlist
 tele	datamng.h	/^typedef struct strTele tele;$/;"	t	typeref:struct:strTele
 telep	datamng.h	/^	tele *telep;$/;"	m	struct:__anon2
 tlist	datamng.h	/^typedef struct strTlist tlist;$/;"	t	typeref:struct:strTlist
+wdaymap	datamng.c	/^char *wdaymap[7] = {$/;"	v
+wdaymapzh	datamng.c	/^char *wdaymapzh[7] = {$/;"	v
