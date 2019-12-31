@@ -19,7 +19,7 @@ mode map[5] = {
 };
 
 char *monmap[12] = {
-	"Jan","Fab","Mar","Apr","May","Jun","Jul","Aug",
+	"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug",
 		"Sep","Oct","Nov","Dec"
 };
 
