@@ -2,7 +2,16 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
-#include "datamng.h"
+
+#ifndef DATAMNG
+	#include "datamng.h"
+	#define DATAMNG
+#endif
+
+#ifndef TSTAT
+	#include "tstat.h"
+	#define TSTAT
+#endif
 
 
 int main(int argc, char *argv[]){
@@ -26,10 +35,20 @@ int main(int argc, char *argv[]){
 	else
 		printf("findbyname not passed!\n");
 	datach(ep,"%s");
-	ptele(ep,"Starts at %s24h:%sm:%ss %s2y or %s4y\n");
+	ptele(ep,"Starts at %sHh:%smm:%sss %s2y\t%emm:%ess\t%m\n");
 	sleep(1);
 	datach(ep,"%e");
-	ptele(ep,"Ends at %e24h:%em:%es %e2y or %e4y\n");
+	ptele(ep,"Ends at %eHh:%emm:%ess %e2y or %e4y\n");
+	printf("\n\n\nstart statistic\n");
+	pall(list,NULL,0);
+	iterlist *iter=newiter(list);
+	pttitle("\n\n%n\t%i\tperiod\n");
+	for(tele *ele;ele=liter(iter);){
+		if(ele->spndnextid==-1){
+			ptele(ele,"%n\t%i\t");
+			printf("%ds\n",getprd(list,ele->name));
+		}
+	}
 	fsave(list,"save1.list");
 	printf("End test.\n");
 	return 0;

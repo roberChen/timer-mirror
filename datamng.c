@@ -6,14 +6,18 @@
 #include <stdarg.h>
 #include <time.h>
 
-#include "datamng.h"
+#ifndef DATAMNG
+	#define DATAMNG
+	#include "datamng.h"
+#endif
 
 extern int errno;
 
-mode map[5] = {
+mode map[6] = {
 	Started,
 	Ended,
 	Suspend,
+	Restarted,
 	Plan,
 	None
 };
@@ -46,6 +50,11 @@ tlist *listinit(){
 }
 
 tele *add(tlist *list,char *name, mode status){
+	mode newstatus = status;
+	if(findbyname(list,name)!=NULL){
+		newstatus = Restarted;
+	}
+
 	tele *new = calloc(1, sizeof(tele));
 	if(new==NULL){
 		perror("Creat new activity failed.");
@@ -61,12 +70,33 @@ tele *add(tlist *list,char *name, mode status){
 	}
 	list->lenth++;
 
+
 	new->name = malloc(strlen(name)+1);
 	strcpy(new->name,name);
 	new->id = list->lenth;
 	new->next = NULL;
 	new->status = status;
 	new->list = list;
+	new->start = 0;
+	new->endt = 0;
+	new->spndnextid = -1;
+	new->status = newstatus;
+
+
+	if(new->status == Restarted){
+		int nextid = findbyname(list,name)->id;
+		iterlist *iter = newiter(list);
+		for(tele *ele;ele=liter(iter);){
+			if(ele->id==nextid && 
+				ele->status==Suspend &&
+				ele->spndnextid!=-1)
+				nextid = ele->spndnextid;
+			else if(ele->spndnextid==-1 && ele->id ==nextid){
+				ele->status = Suspend;
+				ele->spndnextid = new->id;
+			}
+		}
+	}
 
 	return new;
 }
@@ -103,11 +133,12 @@ int ptele(tele *ele,char *fmt){
 	//					c means characters, z means chinese.
 	//	%sd : date of start
 	//	%snD %scD %szD : week day of start(Mon, Tue,etc)
-	//	%s12h %s24h: hour of start.
-	//	%sH : AM or PM of start
-	//	%sm :minutes of start
-	//	%ss: seconds of start
+	//	%shh %sHh: hour of start.
+	//	%sHH : AM or PM of start
+	//	%smm :minutes of start
+	//	%sss: seconds of start
 	//	%e- :sames to s. shows the time of end.
+	//	%m : status
 	char *cp = fmt;
 	struct tm *thistm;
 	time_t *t;
@@ -118,7 +149,7 @@ int ptele(tele *ele,char *fmt){
 		}
 		cp++;
 		if(*cp=='n'){
-			printf("%s",ele->name);
+			printf("%-*.*s",15,15,ele->name);
 			cp++;
 			continue;
 		}
@@ -127,64 +158,71 @@ int ptele(tele *ele,char *fmt){
 			cp++;
 			continue;
 		}
+		if(*cp=='m'){
+			char *stname;
+			switch(ele->status){
+				case Started:
+					stname = "Started";
+					break;
+				case Ended:
+					stname = "Ended";
+					break;
+				case Suspend:
+					stname = "Suspend";
+					break;
+				case Restarted:
+					stname = "Restarted";
+					break;
+				case Plan:
+					stname = "Plan";
+					break;
+				case None:
+					stname = "-";
+					break;
+			}
+			printf("%s",stname);
+			cp++;
+		}
 		if(*cp=='s' || *cp=='e'){
 			t = *cp=='s'?&ele->start:&ele->endt;
 			thistm = localtime(t);
 			cp++;
+			if(*t==0){
+				printf("--");
+				cp+=2;
+				continue;
+			}
 			if(strncmp("2y",cp,2)==0){
 				printf("%d",thistm->tm_year-(thistm->tm_year/100)*100);
-				cp+=2;
-				continue;
 			}else if(strncmp("4y",cp,2)==0){
 				printf("%d",thistm->tm_year+1900);
-				cp+=2;
-				continue;
 			}else if(strncmp("nM",cp,2)==0){
 				printf("%d",thistm->tm_mon);
-				cp+=2;
-				continue;
 			}else if(strncmp("cM",cp,2)==0){
 				printf("%s",monmap[thistm->tm_mon-1]);
-				cp+=2;
-				continue;
 			}else if(strncmp("zM",cp,2)==0){
 				printf("%s",monmapzh[thistm->tm_mon-1]);
-				cp+=2;
-				continue;
-			}else if(strncmp("12h",cp,3)==0){
+			}else if(strncmp("hh",cp,2)==0){
 				printf("%.2d",thistm->tm_hour>12?thistm->tm_hour-12:thistm->tm_hour);
-				cp+=3;
-				continue;
-			}else if(strncmp("24h",cp,3)==0){
+			}else if(strncmp("Hh",cp,2)==0){
 				printf("%.2d",thistm->tm_hour);
-				cp+=3;
-				continue;
-			}else if(*cp=='H'){
+			}else if(strncmp("HH",cp,2)==0){
 				printf("%s",thistm->tm_hour>12?"PM":"AM");
-				cp++;
-				continue;
-			}else if(*cp=='d'){
+			}else if(strncmp("dd",cp,2)==0){
 				printf("%d",thistm->tm_mday);
-				cp++;
-				continue;
 			}else if(strncmp("nD",cp,2)==0){
 				printf("%d",thistm->tm_wday);
-				cp+=2;
 			}else if(strncmp("cD",cp,2)==0){
 				printf("%s",wdaymap[thistm->tm_wday-1]);
-				cp+=2;
-				continue;
 			}else if(strncmp("zD",cp,2)==0){
 				printf("%s",wdaymapzh[thistm->tm_wday-1]);
-				cp+=2;
-				continue;
-			}else if(*cp=='m'){
+			}else if(strncmp("mm",cp,2)==0){
 				printf("%.2d",thistm->tm_min);
-				cp++;
-			}else if(*cp=='s'){
+			}else if(strncmp("ss",cp,2)==0){
 				printf("%.2d",thistm->tm_sec);
-				cp++;
 			}
+			cp+=2;
+			continue;
 		}
 	}
 	return 0;
@@ -193,7 +231,7 @@ int ptele(tele *ele,char *fmt){
 tele *findbyid(tlist *list, int id){
 	tele *obj;
 	for(iterlist *iter=newiter(list);obj=liter(iter);){
-		if(obj->id==id)
+		if(obj!=NULL && obj->id==id)
 			return obj;
 	}
 	return NULL;
@@ -202,7 +240,7 @@ tele *findbyid(tlist *list, int id){
 tele *findbyname(tlist *list,char *name){
 	tele *obj;
 	for(iterlist *iter=newiter(list);obj=liter(iter);)
-		if(strcmp(obj->name,name)==0)
+		if(obj!=NULL && strcmp(obj->name,name)==0)
 			return obj;
 	return NULL;
 }
@@ -330,10 +368,12 @@ int fsave(tlist *saveobj, char *fname){
 				imode = 1;break;
 			case Suspend:
 				imode = 2;break;
-			case Plan:
+			case Restarted:
 				imode = 3;break;
-			case None:
+			case Plan:
 				imode = 4;break;
+			case None:
+				imode = 5;break;
 		}
 		//printf("Saving %s %d %ld %ld %d at %s\n",
 		//		ele->name,

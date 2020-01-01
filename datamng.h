@@ -1,9 +1,11 @@
 #include <stdarg.h>
 #include <time.h>
+
 typedef enum{
 	Started,
 	Ended,
 	Suspend,
+	Restarted,
 	Plan,
 	None
 } mode;

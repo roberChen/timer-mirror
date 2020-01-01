@@ -108,12 +108,13 @@ Print tele to *stdout* with fmt:
 |            ```%e-```             | Print the infos of end time.                                 |
 |       ```2y```*or*```4y```       | year, ```2y```print the year with 2 numbers while ```4y```print 4. For example 19 or 2019. |
 | ```nM```*or*```cM```*or*```zM``` | month in number, English characters or Chinese characters. For example 2 or Feb or 二月 |
-|             ```d```              | date.                                                        |
+|             ```dd```             | date.                                                        |
 | ```nD```*or*```cD```*or*```zD``` | week day. eg 4 *or* Thursday *or* 周四                       |
-|      ```12h```*or*```24h```      | print the hour.                                              |
-|             ```H```              | print AM or PM                                               |
-|             ```m```              | print minute                                                 |
-|             ```s```              | print seconds                                                |
+|       ```hh```*or*```Hh```       | print the hour.                                              |
+|             ```HH```             | print AM or PM                                               |
+|             ```mm```             | print minute                                                 |
+|             ```ss```             | print seconds                                                |
+|             ```m```              | status of the activity                                       |
 
 Returns success or not
 
