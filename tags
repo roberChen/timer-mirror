@@ -4,11 +4,18 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+DATAMNG	datamng.c	10;"	d	file:
+DATAMNG	datamng_test.c	8;"	d	file:
+DATAMNG	tstat.c	6;"	d	file:
+DATAMNG	tstat.h	4;"	d
 Ended	datamng.h	/^	Ended,$/;"	e	enum:__anon1
 None	datamng.h	/^	None$/;"	e	enum:__anon1
 Plan	datamng.h	/^	Plan,$/;"	e	enum:__anon1
+Restarted	datamng.h	/^	Restarted,$/;"	e	enum:__anon1
 Started	datamng.h	/^	Started,$/;"	e	enum:__anon1
 Suspend	datamng.h	/^	Suspend,$/;"	e	enum:__anon1
+TSTAT	datamng_test.c	13;"	d	file:
+TSTAT	tstat.c	11;"	d	file:
 add	datamng.c	/^tele *add(tlist *list,char *name, mode status){$/;"	f
 datach	datamng.c	/^int datach(tele *obj,char *fmt,...){$/;"	f
 delele	datamng.c	/^int delele(tlist *list, tele *ele){$/;"	f
@@ -17,6 +24,7 @@ findbyid	datamng.c	/^tele *findbyid(tlist *list, int id){$/;"	f
 findbyname	datamng.c	/^tele *findbyname(tlist *list,char *name){$/;"	f
 floads	datamng.c	/^tlist *floads(char *fname){$/;"	f
 fsave	datamng.c	/^int fsave(tlist *saveobj, char *fname){$/;"	f
+getprd	tstat.c	/^int getprd(tlist *list,char *name){$/;"	f
 head	datamng.h	/^	tele *head;$/;"	m	struct:strTlist
 id	datamng.h	/^	int id;$/;"	m	struct:__anon2
 id	datamng.h	/^	int id;$/;"	m	struct:strTele
@@ -29,15 +37,18 @@ listinit	datamng.c	/^tlist *listinit(){$/;"	f
 liter	datamng.c	/^tele *liter(iterlist *iterobj){$/;"	f
 main	datamng_test.c	/^int main(int argc, char *argv[]){$/;"	f
 main	test.c	/^int main(int argc, char *argv[]){$/;"	f
-map	datamng.c	/^mode map[5] = {$/;"	v
+map	datamng.c	/^mode map[6] = {$/;"	v
 mode	datamng.h	/^} mode;$/;"	t	typeref:enum:__anon1
 monmap	datamng.c	/^char *monmap[12] = {$/;"	v
 monmapzh	datamng.c	/^char *monmapzh[12] = {$/;"	v
 name	datamng.h	/^	char *name;$/;"	m	struct:strTele
 newiter	datamng.c	/^iterlist *newiter(tlist *obj){$/;"	f
 next	datamng.h	/^	tele *next;$/;"	m	struct:strTele
+pall	tstat.c	/^int pall(tlist *list,char *fmt,int iftotal){$/;"	f
 prev	datamng.h	/^	tele *prev;$/;"	m	struct:strTele
-ptele	datamng.c	/^int ptele(tele *ele,char *fmt){$/;"	f
+ptele	datamng.c	/^int ptele(tele *ele,char *fmt,...){$/;"	f
+pttitle	tstat.c	/^int pttitle(char *fmt){$/;"	f
+sgethprd	tstat.c	/^char *sgethprd(int sprd){$/;"	f
 spndnextid	datamng.h	/^	int spndnextid;$/;"	m	struct:strTele
 start	datamng.h	/^	time_t start;$/;"	m	struct:strTele
 status	datamng.h	/^	mode status;$/;"	m	struct:strTele
@@ -49,3 +60,4 @@ telep	datamng.h	/^	tele *telep;$/;"	m	struct:__anon2
 tlist	datamng.h	/^typedef struct strTlist tlist;$/;"	t	typeref:struct:strTlist
 wdaymap	datamng.c	/^char *wdaymap[7] = {$/;"	v
 wdaymapzh	datamng.c	/^char *wdaymapzh[7] = {$/;"	v
+项目结构	项目结构.html	/^<div  id='write'  class = 'is-node'><h1><a name="项目结构" class="md-header-anchor"><\/a><span>项目结构<\/span><\/h1><p><span>项目将分为一个主文件和相关库组成. 软件几乎所有功能要在库中实现. 这样可以达到复用的目的. 同时在功能增加时可以更加容易.<\/span><\/p><div class="md-diagram-panel"><svg id="mermaidChart0" width="729.078125" xmlns="http:\/\/www.w3.org\/2000\/svg" height="100%" viewBox="-10 -10 492.71875 472"><style>$/;"	a

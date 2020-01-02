@@ -123,11 +123,12 @@ int delele(tlist *list, tele *ele){
 	return 1;
 }
 
-int ptele(tele *ele,char *fmt){
+int ptele(tele *ele,char *fmt,...){
 	//print the ele with format:
 	//the format note:
 	//	%n :name
 	//	%i :id
+	//	%S :strings;
 	//	%s2y %s4y: year of start
 	//	%snM %scM %szM: month of start, n means number,
 	//					c means characters, z means chinese.
@@ -142,6 +143,8 @@ int ptele(tele *ele,char *fmt){
 	char *cp = fmt;
 	struct tm *thistm;
 	time_t *t;
+	va_list ap;
+	va_start(ap,fmt);
 	while(*cp){
 		if(*cp!='%'){
 			putchar(*cp++);
@@ -155,6 +158,11 @@ int ptele(tele *ele,char *fmt){
 		}
 		if(*cp=='i'){
 			printf("%d",ele->id);
+			cp++;
+			continue;
+		}
+		if(*cp=='S'){
+			printf("%s",va_arg(ap,char *));
 			cp++;
 			continue;
 		}
@@ -225,6 +233,7 @@ int ptele(tele *ele,char *fmt){
 			continue;
 		}
 	}
+	va_end(ap);
 	return 0;
 }
 
@@ -282,6 +291,8 @@ int datach(tele *obj,char *fmt,...){
 				count++;
 				break;
 			case 'm':
+				if(obj->status==Restarted)
+					break;
 				obj->status = va_arg(ap,mode);
 				count++;
 				break;

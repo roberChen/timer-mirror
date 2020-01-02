@@ -41,7 +41,7 @@ typedef struct{
 tlist *listinit();
 tele *add(tlist *list, char *name, mode status);
 int delele(tlist *list, tele *ele);
-int ptele(tele *,char *);
+int ptele(tele *,char *,...);
 tele *findbyid(tlist *list, int id);
 tele *findbyname(tlist *list, char *name);
 int datach(tele *obj, char *fmt,...);

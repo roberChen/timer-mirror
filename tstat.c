@@ -104,3 +104,18 @@ int getprd(tlist *list,char *name){
 	}
 	return difft;
 }
+
+char *sgethprd(int sprd){
+	char *str = malloc(11);
+	int d,h,m,s;
+	d = sprd/(3600*24);
+	h = (sprd-d*3600*24)/3600;
+	m = (sprd-d*3600*24-h*3600)/60;
+	s = sprd - d*3600*24 - h*3600 - m*60;
+	if(d==0)
+		sprintf(str,"%d:%.2d:%.2d",h,m,s);
+	else
+		sprintf(str,"%d:%d:%.2d:%.2d",d,h,m,s);
+
+	return str;
+}
