@@ -62,7 +62,8 @@ int end(tlist *list,int argc,char *argv[]){
 			}
 		}
 	}
-
+	if(!ele)
+		return -1;
 	ptele(ele,"%n\t%i\t%eHh:%emm:%ess,%m\n");
 	return 0;
 }

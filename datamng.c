@@ -140,6 +140,10 @@ int ptele(tele *ele,char *fmt,...){
 	//	%sss: seconds of start
 	//	%e- :sames to s. shows the time of end.
 	//	%m : status
+	if(!ele){
+		fprintf(stderr,"Object not exit!\n");
+		return -1;
+	}
 	char *cp = fmt;
 	struct tm *thistm;
 	time_t *t;
@@ -255,6 +259,10 @@ tele *findbyname(tlist *list,char *name){
 }
 
 int datach(tele *obj,char *fmt,...){
+	if(!obj){
+		fprintf(stderr,"Object not exit.\n");
+		return -1;
+	}
 	int count = 0;
 	va_list ap;
 	va_start(ap,fmt);
@@ -333,6 +341,11 @@ tlist *floads(char *fname){
 	//loads
 	tlist *new = listinit();
 	tele *elep;
+	getc(fp);
+	if(feof(fp))
+		return NULL;
+	else
+		rewind(fp);
 	while(!feof(fp)){
 		elep = calloc(1,sizeof(tele));
 		elep->next = NULL;
