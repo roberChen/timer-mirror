@@ -122,6 +122,8 @@ char *sgethprd(int sprd){
 
 
 char *srecon(char *origion){
+	if(origion==NULL)
+		return NULL;
 	char *new = malloc(strlen(origion)+1);
 	char *np = new,*op=origion;
 	for(;*op;){

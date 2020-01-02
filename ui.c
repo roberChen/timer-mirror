@@ -27,7 +27,7 @@ int start(tlist *list,int argc,char *argv[]){
 	while(--argc){
 		argv++;
 		for(;*cp=*(*argv);cp++,(*argv)++);
-		*cp=' ';
+		*++cp=' ';
 	}
 	*cp='\0';
 	tele *new = add(list,s,Started);
