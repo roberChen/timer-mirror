@@ -1,0 +1,7 @@
+TOPTBIN=~/projects/c/libs/lib
+TOPTH=~/projects/c/libs/source/libtopt
+timer:  $(TOPTBIN)/libtopt.a datamng.c datamng.h tstat.c tstat.h ui.c ui.h main.c
+	gcc -g -o timer main.c datamng.c datamng.h tstat.c tstat.h ui.c ui.h -L $(TOPTBIN) -ltopt -I $(TOPTH) 
+
+$(TOPTBIN)/libtopt.a: $(TOPTH)/topts.c
+	gcc -c -o $(TOPTBIN)/libtopt.a $(TOPTH)/topts.c

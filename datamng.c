@@ -291,8 +291,6 @@ int datach(tele *obj,char *fmt,...){
 				count++;
 				break;
 			case 'm':
-				if(obj->status==Restarted)
-					break;
 				obj->status = va_arg(ap,mode);
 				count++;
 				break;

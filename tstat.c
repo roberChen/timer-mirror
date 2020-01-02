@@ -119,3 +119,26 @@ char *sgethprd(int sprd){
 
 	return str;
 }
+
+
+char *srecon(char *origion){
+	char *new = malloc(strlen(origion)+1);
+	char *np = new,*op=origion;
+	for(;*op;){
+		if(*op!='\\')
+			*np++ = *op++;
+		else if(*op=='\\'){
+			if(strncmp("\\n",op,2)==0){
+				*np='\n';
+				np++;
+				op+=2;
+			}else if(strncmp("\\t",op,2)==0){
+				*np='\t';
+				np++;
+				op+=2;
+			}
+		}
+	}
+
+	return new;
+}
