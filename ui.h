@@ -10,3 +10,4 @@ int start(tlist *,int, char *[]);
 int end(tlist *,int,char *[]);
 int listall(tlist *,int,char *[]);
 int statistic(tlist *,int,char *[]);
+int help();

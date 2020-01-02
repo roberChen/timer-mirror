@@ -42,6 +42,14 @@ int main(int argc, char *argv[]){
 		listall(list,argc,argv);
 	}else if(strcmp("statistic",*argv)==0){
 		statistic(list,argc,argv);
+	}else if(strcmp("help",*argv)==0||
+			strcmp("--help",*argv)==0||
+			strcmp("-h",*argv)==0){
+		help();
+	}else{
+		fprintf(stderr,"Unknown argument %s.\n",*argv);
+		help();
+		exit(1);
 	}
 
 	//end
