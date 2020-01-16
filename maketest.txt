@@ -1,4 +1,4 @@
-TOPTH=~/projects/c/libs/source/libtopt
+TOPTH=../libtopt
 timer:  $(TOPTH)/topts.c datamng.c datamng.h tstat.c tstat.h ui.c ui.h main.c
 	gcc -g -o timer main.c datamng.c tstat.c tstat.h ui.c  $(TOPTH)/topts.c -I $(TOPTH) 
 

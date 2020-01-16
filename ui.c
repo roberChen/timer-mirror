@@ -56,9 +56,9 @@ int start(tlist *list,int argc,char *argv[]){
 	while(--argc){
 		argv++;
 		for(;*cp=*(*argv);cp++,(*argv)++);
-		*++cp=' ';
+		*cp++=' ';
 	}
-	*cp='\0';
+	*--cp='\0';
 	tele *new = add(list,s,Started);
 	datach(new,"%s");
 	ptele(new,"Started %n\tid:%i,%sHh:%smm:%sss\tmode:%m\n");
@@ -71,7 +71,7 @@ int end(tlist *list,int argc,char *argv[]){
 	char **others;
 	tele *ele;
 	Opts *optlist = opts(2,"i|id:",&ifid,"n|name:",&ifname);
-	optloads(optlist,&others,argc,argv);
+	argc = optloads(optlist,&others,argc,argv);
 	if(ifid&&ifname){
 		printf("Argument error: id and name options cannot occurs at the same time.\n");
 		exit(2);
@@ -85,7 +85,16 @@ int end(tlist *list,int argc,char *argv[]){
 		ele = findbyid(list,atoi(others[0]));
 		datach(ele,"%e%m",Ended);
 	}else if(ifname){
-		if(!findbyname(list,others[0])){
+		char name[500];
+		char *cp = name;
+		while(--argc){
+			(*others)++;
+			for(;*cp=*(*others);cp++,(*others)++);
+			*cp++=' ';
+		}
+		*--cp='\0';
+		
+		if(!findbyname(list, name)){
 			fprintf(stderr,"End failed. Not activity named \"%s\".\n",others[0]);
 			return -1;
 		}
